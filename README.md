@@ -57,6 +57,7 @@ The input_variables.py script contains all the necessary adjustable variables fo
 - Input sequence molecule type (DNA or RNA)
 - List of reference genomes, tab separated, and formatted as follows:
 
+|-------|-----|
 | path_to_genome_1 | Tag_1 |
 | path_to_genome_2 | Tag_2 |
 | path_to_genome_3 | Tag_3 |
