@@ -55,11 +55,11 @@ The input_variables.py script contains all the necessary adjustable variables fo
 - Path to the output folder
 - Reporter gene or tag to be added to the end of the toehold
 - Input sequence molecule type (DNA or RNA)
-- List of reference genomes formatted as follows:
+- List of reference genomes, tab separated, and formatted as follows:
 
-path_to_genome_1	Tag_1
-path_to_genome_2	Tag_2
-path_to_genome_3	Tag_3
+| path_to_genome_1 | Tag_1 |
+| path_to_genome_2 | Tag_2 |
+| path_to_genome_3 | Tag_3 |
 
 - Percentage identity threshold for hits to retain from the alignments
 - Evalue threshold for hits to retain from the alignments
