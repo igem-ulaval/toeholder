@@ -10,7 +10,7 @@ The following programs must be installed and added to the PATH:
 BLAST can also be installed with the following command line:
 
 ```
-sudo apt-get install blast
+sudo apt-get install ncbi-blast+
 ```
 
 It also depends on the following Python libraries:
@@ -31,8 +31,8 @@ pip3 install pandas
 All scripts are written in Python 3 and depend on the following libraries
 
 - toehold_generator.py: Sweeps through the sequence of the target gene looking for suitable candidate recognition sequences. All candidate recognition sequences are evaluated based on the following parameters:
-	. Secondary structure on the mRNA
-	. ddG of the bound (toehold + target) and unbound state (toehold and target, separately)
+	- Secondary structure on the mRNA
+	- ddG of the bound (toehold + target) and unbound state (toehold and target, separately)
 
 - input_variables.py: Defines tunable parameters and input files for the toehold_generator script.
 
@@ -49,16 +49,16 @@ python toehold_generator.py
 ```
 
 The input_variables.py script contains all the necessary adjustable variables for the script, including:
-	. Input sequence (FASTA formatted)
-	. Length of the unpaired region of the recognition sequence (\alpha in the diagram)
-	. Length of the paired region of the recognition sequence (\beta in the diagram)
-	. Path to the output folder
-	. Reporter gene or tag to be added to the end of the toehold
-	. Input sequence molecule type (DNA or RNA)
-	. List of reference genomes
-	. Percentage identity threshold for hits to retain from the alignments
-	. Evalue threshold for hits to retain from the alignments
-	. Minimum number of unpaired bases in the secondary structure of the target mRNA for a candidate trigger to be considered
+- Input sequence (FASTA formatted)
+- Length of the unpaired region of the recognition sequence (&alpha in the diagram)
+- Length of the paired region of the recognition sequence (&beta in the diagram)
+- Path to the output folder
+- Reporter gene or tag to be added to the end of the toehold
+- Input sequence molecule type (DNA or RNA)
+- List of reference genomes
+- Percentage identity threshold for hits to retain from the alignments
+- Evalue threshold for hits to retain from the alignments
+- Minimum number of unpaired bases in the secondary structure of the target mRNA for a candidate trigger to be considered
 
 ![](https://github.com/igem-ulaval/toehold_design/Figures/toehold_diagram.png)
 
@@ -77,12 +77,12 @@ Outside those folders, the rest of the files are:
 - toehold_candidates.txt: First list of toeholds ranked by the number of non-paired positions in the secondary structure of the trigger region of the target mRNA.
 - toehold_seqs.fasta: FASTA-formatted file containing the recognition sequences for each of the toeholds.
 - all_toeholds_results.txt: Results of the tests performed on the toeholds. It adds the following columns to the toehold_candidates.txt file:
-	. Toehold index
-	. Free energy of the toehold-mRNA complex
-	. Percentage of paired bases of the toehold-mRNA complex that correspond the intended base pairing
-	. Free energy of the toehold secondary structure
-	. Free energy of the mRNA secondary structure
-	. GC content of the toehold recognition sequence
+	- Toehold index
+	- Free energy of the toehold-mRNA complex
+	- Percentage of paired bases of the toehold-mRNA complex that correspond the intended base pairing
+	- Free energy of the toehold secondary structure
+	- Free energy of the mRNA secondary structure
+	- GC content of the toehold recognition sequence
 - <tag>_toeholds_alignment.aln: Output of the BLAST alignment of the library of toeholds to the genome referenced with the corresponding <tag> in the genome list.
 - all_toeholds_results_genome_matches.txt: Adds the counts of matches for each toehold in each of the genomes referenced in the genome list.
 
