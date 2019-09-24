@@ -55,7 +55,12 @@ The input_variables.py script contains all the necessary adjustable variables fo
 - Path to the output folder
 - Reporter gene or tag to be added to the end of the toehold
 - Input sequence molecule type (DNA or RNA)
-- List of reference genomes
+- List of reference genomes formatted as follows:
+
+path_to_genome_1	Tag_1
+path_to_genome_2	Tag_2
+path_to_genome_3	Tag_3
+
 - Percentage identity threshold for hits to retain from the alignments
 - Evalue threshold for hits to retain from the alignments
 - Minimum number of unpaired bases in the secondary structure of the target mRNA for a candidate trigger to be considered
@@ -83,7 +88,7 @@ Outside those folders, the rest of the files are:
 	- Free energy of the toehold secondary structure
 	- Free energy of the mRNA secondary structure
 	- GC content of the toehold recognition sequence
-- \<tag\>_toeholds_alignment.aln: Output of the BLAST alignment of the library of toeholds to the genome referenced with the corresponding <tag> in the genome list.
+- \<tag\>_toeholds_alignment.aln: Output of the BLAST alignment of the library of toeholds to the genome referenced with the corresponding tag in the genome list.
 - all_toeholds_results_genome_matches.txt: Adds the counts of matches for each toehold in each of the genomes referenced in the genome list.
 
 
