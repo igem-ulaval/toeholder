@@ -7,7 +7,7 @@ The following programs must be installed and added to the PATH:
 - NUPACK (Zadeh et al. 2011. Journal of Computational Chemistry): available at http://www.nupack.org/downloads
 - BLAST+ (Camacho et al. 2009. BMC Bioinformatics): available at https://blast.ncbi.nlm.nih.gov/Blast.cgi?CMD=Web&PAGE_TYPE=BlastDocs&DOC_TYPE=Download
 
-BLAST can also be installed with the following command line:
+BLAST+ can also be installed with the following command line:
 
 ```
 sudo apt-get install ncbi-blast+
