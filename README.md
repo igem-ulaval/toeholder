@@ -83,7 +83,7 @@ Outside those folders, the rest of the files are:
 	- Free energy of the toehold secondary structure
 	- Free energy of the mRNA secondary structure
 	- GC content of the toehold recognition sequence
-- <tag>_toeholds_alignment.aln: Output of the BLAST alignment of the library of toeholds to the genome referenced with the corresponding <tag> in the genome list.
+- \<tag\>_toeholds_alignment.aln: Output of the BLAST alignment of the library of toeholds to the genome referenced with the corresponding <tag> in the genome list.
 - all_toeholds_results_genome_matches.txt: Adds the counts of matches for each toehold in each of the genomes referenced in the genome list.
 
 
