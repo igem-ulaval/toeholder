@@ -1,5 +1,23 @@
-# toehold_design
-Team iGEM ULaval 2019 scripts for toehold design
+# toeholder
+
+![](Figures/toeholder.png)
+
+## Description
+
+Toeholder is a tool that can efficiently design toehold riboswitches for the detection of a target gene. A toehold riboswitch is an RNA molecule that contains the necessary elements for the expression of a reporter gene, i. e. a ribosome binding sequence (RBS), a start codon, and the reporter gene sequence. What makes toehold riboswitches special is that they fold into a secondary structure that blocks the access of the ribosome to the RBS, thus preventing gene expression. However, they are carefully designed so that they can bind to a trigger sequence within a target gene, which results in the unfolding of the secondary structure and allows the expression of the reporter gene (Green et al. 2014. Cell.). Applications for toehold riboswitches range from detection of sequences of pathogenic organisms (Pardee, et al. 2016. Cell; Ma, et al. 2018. Synthetic Biology) to creating logical systems (Green et al. 2014. Cell; Green, et al. 2017. Nature).
+
+![](Figures/toehold_diagram.png)
+
+Toeholder aims to facilitate the design of these molecules by offering the following capabilities:
+- Testing all the different trigger sequences within a target gene.
+- Simulating the secondary structure of the proposed riboswitch for each trigger.
+- Simulating the binding of each toehold riboswitch to the target gene to test if it binds accurately to its corresponding trigger.
+- Aligning to user-defined genomes in order to select generalist or specific riboswitches as needed
+
+The above tests have allowed us to design toehold riboswitches for different organisms. Secondary structures obtained are very close to the ones observed for the riboswitches published by Green et al. (2014), and 70-79% of them are predicted to bind perfectly to their trigger sequences within the target gene. The remaining 21-30% are identified as binding partially or with a shift to the target or as having stop codons at undesirable positions, which allows discarding them. Finally, the alignment function has allowed us to design toeholds that are specific for the genome of a given strain, but also to select those that have matches in several strains of the same organism. All in all, these functions make toeholder a very versatile tool.
+
+For further information, please refer to our wiki:
+https://2019.igem.org/Team:ULaval
 
 ## Dependencies
 
@@ -67,7 +85,6 @@ The input_variables.py script contains all the necessary adjustable variables fo
 - Evalue threshold for hits to retain from the alignments
 - Minimum number of unpaired bases in the secondary structure of the target mRNA for a candidate trigger to be considered
 
-![](Figures/toehold_diagram.png)
 
 ## Output
 
