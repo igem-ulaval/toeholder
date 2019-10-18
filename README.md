@@ -48,13 +48,13 @@ pip3 install pandas
 
 All scripts are written in Python 3 and depend on the following libraries
 
-- toehold_generator.py: Sweeps through the sequence of the target gene looking for suitable candidate recognition sequences. All candidate recognition sequences are evaluated based on the following parameters:
+- toeholder.py: Sweeps through the sequence of the target gene looking for suitable candidate recognition sequences. All candidate recognition sequences are evaluated based on the following parameters:
 	- Secondary structure on the mRNA
 	- ddG of the bound (toehold + target) and unbound state (toehold and target, separately)
 
-- input_variables.py: Defines tunable parameters and input files for the toehold_generator script.
+- input_variables.py: Defines tunable parameters and input files for the toeholder script.
 
-- toehold_helper_functions.py: Contains several helper functions for the other scripts.
+- toeholder_helper_functions.py: Contains several helper functions for the other scripts.
 
 - alignments.py: Aligns the toeholds to a selected set of reference genomes to identify matches. Toeholds matching more than one sequence or matching sequences from other genomes would not be completely specific to the target.
 
@@ -63,7 +63,7 @@ All scripts are written in Python 3 and depend on the following libraries
 The workflow is fully automated to be executed as follows as long as all the scripts are in the current directory:
 
 ```
-python toehold_generator.py
+python toeholder.py
 ```
 
 The input_variables.py script contains all the necessary adjustable variables for the script, including:
@@ -88,7 +88,7 @@ The input_variables.py script contains all the necessary adjustable variables fo
 
 ## Output
 
-The toehold_generator.py script generates an output folder with a subfolder for each of the candidate toeholds generated. When the candidate toehold contains a stop codon, its corresponding subfolder is empty. When it does not contain a stop codon, there are four files inside the subfolder:
+The toeholder.py script generates an output folder with a subfolder for each of the candidate toeholds generated. When the candidate toehold contains a stop codon, its corresponding subfolder is empty. When it does not contain a stop codon, there are four files inside the subfolder:
 - switch1_python.in: NUPACK-formatted input to test the toehold's secondary structure.
 - switch1_python.mfe: NUPACK-formatted output with the most favorable secondary structure.
 - toehold_mRNA.in: NUPACK-formatted input to test the toehold's ability to bind to the target mRNA.

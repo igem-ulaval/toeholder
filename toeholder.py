@@ -21,7 +21,7 @@ import numpy as np
 import pandas as pd
 from shutil import copyfile
 import glob
-from toehold_helper_functions import *
+from toeholder_helper_functions import *
 from input_variables import *
 
 if not os.path.exists(output_folder):
