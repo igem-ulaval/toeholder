@@ -66,12 +66,31 @@ for hairpin_start_pos in range(length_unpaired, len(mRNA_structure) - length_pai
     sub_seq = mRNA_sequence[start_pos:end_pos]
     sub_struc = mRNA_structure[start_pos:end_pos]
     
+    ## New: Get the substring for the positions for which we need to check GC  ##
+
+    # After the end of the trigger sequence, we always have AUA and the paired side of the hairpin
+    # Disregard these parts of the sequence since the AUA does not change, and the rest is just complementary to the
+    # bases to check
+    for i in check_GC:
+        if i - 4 > len(sub_seq):
+            check_GC.remove(i)
+
+    # Substract 4 from the positions to account for the GGG and the change from 1-based to 0-based
+    nucleotides_check_GC = [sub_seq[i - 4] for i in check_GC]
+
+    # Count the number of G's and C's in those nucleotides to check
+    count_check_GC = nucleotides_check_GC.count('G') + nucleotides_check_GC.count('C')
+
+    percentage_check_GC = round(float(count_check_GC) * 100 / len(nucleotides_check_GC), 2)
+
+    ## End new ##
+
     # Count the number of unpaired bases
     unpaired = sub_struc.count('.')
     if unpaired >= min_unpaired:
-        selected.append([unpaired, sub_struc, sub_seq, start_pos + 1, end_pos, length_unpaired, length_paired])
+        selected.append([unpaired, sub_struc, sub_seq, start_pos + 1, end_pos, length_unpaired, length_paired, percentage_check_GC])
     
-tmp = pd.DataFrame(np.array(selected), columns=['Non paired count', 'Structure', 'Sequence', 'Start', 'End', 'Length unpaired trigger', 'Length paired trigger'])
+tmp = pd.DataFrame(np.array(selected), columns=['Non paired count', 'Structure', 'Sequence', 'Start', 'End', 'Length unpaired trigger', 'Length paired trigger', 'Percentage check GC'])
 df = tmp.sort_values(by = 'Non paired count', ascending = False)
 
 df.to_csv(path_or_buf=os.path.join(output_folder, 'toehold_candidates.txt'), sep = '\t', index = False)
@@ -89,7 +108,7 @@ for index, row in df.iterrows():
 
     # ## 2.- Generate toeholds for each of the candidates
     toehold_folder = os.path.join(output_folder, str(index))
-    generate_toehold(sequence, mol_type, reporter, toehold_folder, length_unpaired)
+    generate_toehold(sequence, mol_type, reporter, toehold_folder, length_unpaired, length_paired)
 
     # ## 3.- Check how well the toeholds bind to the target in the mRNA
     if not os.path.exists(os.path.join(toehold_folder, 'switch1_python.mfe')):
@@ -162,7 +181,7 @@ for index, row in df.iterrows():
     results.append(toehold_data)
     
 # Save as a dataframe #### Remove references no non-paired positions
-results_df = pd.DataFrame(np.array(results), columns=['Non paired count', 'Structure', 'Sequence', 'Start', 'End', 'Length unpaired trigger', 'Length paired trigger', 'Index', 'Binding_energy_toehold_mRNA', 'Percentage_correct_matches', 'Binding_energy_toehold', 'Binding_energy_mRNA', 'GC content'])
+results_df = pd.DataFrame(np.array(results), columns=['Non paired count', 'Structure', 'Sequence', 'Start', 'End', 'Length unpaired trigger', 'Length paired trigger', 'Percentage check GC', 'Index', 'Binding_energy_toehold_mRNA', 'Percentage_correct_matches', 'Binding_energy_toehold', 'Binding_energy_mRNA', 'GC content'])
 
 
 sorted_results = results_df.sort_values(['Binding_energy_toehold_mRNA', 'Percentage_correct_matches'], ascending = [False, True])

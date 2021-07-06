@@ -21,7 +21,7 @@ import pandas as pd
 from shutil import copyfile
 import glob
 import argparse
-from toehold_helper_functions import *
+from toeholder_helper_functions import *
 
 parser = argparse.ArgumentParser(description = 'This script will read a list of toehold candidates and align them to a reference genome. This will allow us to see if there are any toeholds that could have promiscuous binding.')
 
@@ -50,7 +50,7 @@ for line in reader:
         continue
         
     # Save toehold indices and sequences
-    toehold_list.append([line[7], line[2].replace('U', 'T')])
+    toehold_list.append([line[8], line[2].replace('U', 'T')])
     
 df = pd.DataFrame(np.array(toehold_list), columns=['Index', 'Sequence'])
 handle.close()

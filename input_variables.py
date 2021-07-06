@@ -35,3 +35,10 @@ evalue = 1e-6
 
 # The minimum number of unpaired residues in the secondary structure of the target RNA for a candidate trigger to be considered
 min_unpaired = 10
+
+# Positions to check for GC (for a toehold whose trigger has 14 unpaired and 16 paired nucleotides, we recommend looking at
+# positions 23, 24, 26, 31, and 36 because they are the ones with the lowest average occupancy of their hydrogen bonds
+# in our molecular dynamics simulations)
+# These are always specified with the lower position. For example, position 23 should be paired to position 65, so just indicate 23.
+check_GC = [23, 24, 26, 31, 36]
+

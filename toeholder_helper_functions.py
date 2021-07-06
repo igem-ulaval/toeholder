@@ -28,7 +28,7 @@ def get_switch_recognition_seq(trigger, sequence_type, length_unpaired):
     trigger_seq = Seq(trigger, generic_rna)
     return(trigger_seq.back_transcribe().reverse_complement().transcribe())
     
-def get_full_switch(recognition_sequence, reporter, length_unpaired):
+def get_full_switch(recognition_sequence, reporter, length_unpaired, length_paired):
     ''' This sequence receives the recognition sequence and the reporter gene to design the 
     full toehold switch. In the meantime, I will work with all my sequences in RNA.
     '''
@@ -41,9 +41,9 @@ def get_full_switch(recognition_sequence, reporter, length_unpaired):
     rev_comp = str(part2[length_unpaired:].reverse_complement())
     
     # Parts 3 and 5 should be complementary
-    # Adjust their length so that the hairpin has 19 total paired bases with 3 weak pairs at the top (AUA - UAU pairs)
+    # Adjust their length so that the hairpin has (length_paired + 3) total paired bases with 3 weak pairs at the top (AUA - UAU pairs)
     # Get the number of needed bases
-    needed = 16 - (len(recognition_sequence) - length_unpaired)
+    needed = length_paired - (len(recognition_sequence) - length_unpaired)
     
     part3 = 'AUA' 
     part4 = 'CAGAAACAGAGGAGA'
@@ -242,7 +242,7 @@ def count_genome_matches(toeholds_fasta, working_directory, toehold_list, refere
     
     # Loop through the dataframe to add the number of matches for each toehold
     for df_index, row in new_df.iterrows():
-        index = row[7]
+        index = row[8]
         
         match_column.append(match_dictionary.get(int(index), 0))
     
@@ -251,7 +251,7 @@ def count_genome_matches(toeholds_fasta, working_directory, toehold_list, refere
     
     return(new_df)
 
-def generate_toehold(trigger, mol_type, reporter, output_folder, length_unpaired):
+def generate_toehold(trigger, mol_type, reporter, output_folder, length_unpaired, length_paired):
     # Create the output directory
     if not os.path.exists(output_folder):
         os.makedirs(output_folder)
@@ -260,7 +260,7 @@ def generate_toehold(trigger, mol_type, reporter, output_folder, length_unpaired
     recognition_sequence = get_switch_recognition_seq(trigger, mol_type, length_unpaired)
     
     # Design the starting sequence for the switch
-    toehold = get_full_switch(recognition_sequence, reporter, length_unpaired)
+    toehold = get_full_switch(recognition_sequence, reporter, length_unpaired, length_paired)
     
     if toehold != 'Stop':
     
