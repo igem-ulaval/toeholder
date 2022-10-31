@@ -102,11 +102,13 @@ Outside those folders, the rest of the files are:
 - toehold_seqs.fasta: FASTA-formatted file containing the recognition sequences for each of the toeholds.
 - all_toeholds_results.txt: Results of the tests performed on the toeholds. It adds the following columns to the toehold_candidates.txt file:
 	- Toehold index
-	- Free energy of the toehold-mRNA complex
+	- deltaG of binding of the toehold-mRNA complex
 	- Percentage of paired bases of the toehold-mRNA complex that correspond the intended base pairing
-	- Free energy of the toehold secondary structure
-	- Free energy of the mRNA secondary structure
+	- deltaG of folding of the toehold secondary structure
+	- deltaG of folding of the mRNA secondary structure
 	- GC content of the toehold recognition sequence
+	- GC content at the most stable (GC strong) and least stable (GC weak) positions from our molecular dynamics simulation of toehold 1 from Green et al., 2014. Cell
+	- deltaG of refolding of the RBS-linker section of the toehold switch
 - \<tag\>_toeholds_alignment.aln: Output of the BLAST alignment of the library of toeholds to the genome referenced with the corresponding tag in the genome list.
 - all_toeholds_results_genome_matches.txt: Adds the counts of matches for each toehold in each of the genomes referenced in the genome list.
 
