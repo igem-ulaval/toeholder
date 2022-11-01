@@ -17,20 +17,13 @@ import pandas as pd
 def get_switch_recognition_seq(trigger, sequence_type, length_unpaired):
     ''' This function receives a target trigger sequence and the type of molecule
     and obtains the RNA trigger for it.
-    '''
-    # if sequence_type == 'RNA':
-    #     trigger_seq = Seq(trigger, generic_rna)
-    #     return(trigger_seq.back_transcribe().reverse_complement().transcribe())
-    # elif sequence_type == 'DNA':
-    #     trigger_seq = Seq(trigger, generic_dna)
-    #     return(trigger_seq.reverse_complement().transcribe())
-    
+    '''  
     trigger_seq = Seq(trigger, generic_rna)
     return(trigger_seq.back_transcribe().reverse_complement().transcribe())
     
 def get_full_switch(recognition_sequence, reporter, length_unpaired, length_paired):
     ''' This sequence receives the recognition sequence and the reporter gene to design the 
-    full toehold switch. In the meantime, I will work with all my sequences in RNA.
+    full toehold switch. 
     '''
     # Define the rest of the parts of the sequences
     part1 = 'GGG'
@@ -41,7 +34,8 @@ def get_full_switch(recognition_sequence, reporter, length_unpaired, length_pair
     rev_comp = str(part2[length_unpaired:].reverse_complement())
     
     # Parts 3 and 5 should be complementary
-    # Adjust their length so that the hairpin has (length_paired + 3) total paired bases with 3 weak pairs at the top (AUA - UAU pairs)
+    # Adjust their length so that the hairpin has (length_paired + 3) total paired bases
+    # with 3 weak pairs at the top (AUA - UAU pairs)
     # Get the number of needed bases
     needed = length_paired - (len(recognition_sequence) - length_unpaired)
     
@@ -70,12 +64,8 @@ def get_full_switch(recognition_sequence, reporter, length_unpaired, length_pair
         part2 = part2 + needed*'A'
         part6 = 'UUU' + 'AUG' + (needed-6)*'U' + rev_comp
     
-    # part7 = 'ACCUGGCGGCAGCGCAAAAG'
     part7_comp = Seq(reporter[1:5]).back_transcribe().reverse_complement().transcribe()
     part7 = 'ACCUGGCGGCAG' + str(part7_comp) + 'AAAG'
-    
-    # This is an example that fails because it generates a stop codon
-    # part7 = 'ACUAAGCGGCAG' + str(part7_comp) + 'AAAG'
     
     # Test for stop codons
     stop_codons = ['UGA', 'UAA', 'UAG']
@@ -86,7 +76,6 @@ def get_full_switch(recognition_sequence, reporter, length_unpaired, length_pair
                           
     # Loop through the list and check if there are any stop codons in this reading frame
     for codon in test_region_codons:
-        # assert not codon in stop_codons, 'The generated switch contains a stop codon' 
         if codon in stop_codons:
             return('Stop')
                           
@@ -158,9 +147,6 @@ def parse_nupack(nupack_output):
     handle = open(nupack_output, 'r')
     out_dict = OrderedDict()
     
-    # This boolean will help us know if we are looking at the results
-    # bool_results = False
-    
     # This counter will help me load the data
     counter = 0
     
@@ -192,7 +178,7 @@ def parse_nupack(nupack_output):
     handle.close()
     # Return the dictionary
     out_dict['sequence'] = sequence
-    out_dict['energy'] = energy
+    out_dict['energy'] = float(energy)
     out_dict['structure'] = structure
     out_dict['paired_bases'] = paired_bases
     
@@ -224,8 +210,6 @@ def count_genome_matches(toeholds_fasta, working_directory, toehold_list, refere
     for line in reader:
         # Get the index of this toehold
         index = int(line[0][8:])
-        
-        # I could add a filter based on the alignment quality here
         
         if match_dictionary.get(index, -1) == -1:
             # Add this index to the dictionary
