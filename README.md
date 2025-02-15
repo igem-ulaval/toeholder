@@ -19,30 +19,138 @@ The above tests have allowed us to design toehold riboswitches for different org
 For further information, please refer to our wiki:
 https://2019.igem.org/Team:ULaval
 
-## Dependencies
+Toeholder depends on the following software. See the installation instructions below to install them.
 
-The following programs must be installed and added to the PATH:
 - NUPACK (Zadeh et al. 2011. Journal of Computational Chemistry): available at http://www.nupack.org/downloads
 - BLAST+ (Camacho et al. 2009. BMC Bioinformatics): available at https://blast.ncbi.nlm.nih.gov/Blast.cgi?CMD=Web&PAGE_TYPE=BlastDocs&DOC_TYPE=Download
 
-BLAST+ can also be installed with the following command line:
+## How to install
+### On Windows :
+Install WSL (Windows Subsystem for Linux) following the instructions here : https://learn.microsoft.com/en-us/windows/wsl/install
+Basically, just open a PowerShell with admin rigths and do :
+
+    wsl --install -d Ubuntu
+    
+Then reboot the computer. Open the newly installed linux console, create a user and add a password.
+
+Follow the rest of the instructions for the installation in Linux.
+
+### On Linux (Ubuntu)
+1.Install dependencies :
 
 ```
-sudo apt-get install ncbi-blast+
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get install python3.12-venv build-essential python3-dev ncbi-blast+
 ```
-
-It also depends on the following Python libraries:
-- Biopython (Cock et al. 2009. Bioinformatics)
-- Numpy
-- Pandas
-
-These libraries can be installed with the following commands:
+    
+2.Clone the repo :
 
 ```
-pip3 install biopython
-pip3 install numpy
-pip3 install pandas
+git clone https://github.com/igem-ulaval/toeholder.git  
+cd toeholder
 ```
+    
+3.Install a python virtual environment (venv) :
+
+```
+python3 -m venv bio
+```
+    
+4.Activate the venv :
+
+```
+. bio/bin/activate
+```
+
+5.Install python librairies :
+
+```
+pip install biopython==1.77 pandas
+```
+
+(Version 1.77 is required for biopython as there was some changes in the methods used by toeholder afterwards)
+
+6.Download nupack version 3.0.6 from here : https://www.nupack.org/download/software, and copy the file into the toeholder folder.
+(You may have to enter your email to access the page.)
+
+7.Untar and compile nupack :
+
+```
+tar -xvf nupack3.0.6.tar
+cd nupack3.0.6
+make
+```
+
+The compilation will throw a lot of warnings and will eventually fail at some point. Don't panic. We only need the mfe executable wich is compiled just fine. 
+
+8.Add nupack binaries to the linux path, and also set a necessary environment variable for nupack :
+
+```
+nano ~/.bashrc
+```
+
+Scroll to the end of the file and add the following two lines :
+
+```
+export PATH=$HOME/toeholder/nupack3.0.6/bin/:$PATH
+export NUPACKHOME=$HOME/toeholder/nupack3.0.6/  
+```
+
+Close the console and reopen it (WSL), logout and login again (Linux), or type this :
+
+```
+source ~/.bashrc
+```
+
+9.Create an example to test that the installation is working :
+Create a file example.fasta with a dummy sequence like this :
+
+```
+>sequence #1
+ggtaagtcctctagtacaaacacccccaatattgtgatataattaaaattatattcatat
+tctgttgccagaaaaaacacttttaggctatattagagccatcttctttgaagcgttgtc
+```
+
+And a dummy file named reference.txt with two columns separated with the tab character
+
+```
+genome1 tag1
+genome2 tag2
+```
+
+Copy the file input_variables_template.py :
+
+```
+cp input_variables_template.py input_variables.py
+```
+
+And edit the three following lines of input_variables.py:
+
+```
+[...]
+# The path to the sequence for which toeholds will be designed (FASTA-formatted)
+input_seq = 'example.fasta'
+[...]
+# The path to the output folder
+output_folder = 'output'
+[...]
+# The path to the list of reference genomes to which candidate toeholds should be mapped
+# The list should be tab-delimited, with two columns:
+# 1.- Path to the genome file
+# 2.- Name tag for this genome
+reference_list = 'reference.txt'
+```
+
+10.Finally, run toeholder :
+
+```
+python3 toeholder.py
+```
+
+The results are generated in the output folder.
+The file "all_toholder_results.txt" will give you a summary, and the individual simulations are found in the numbered folder, with the extensions .in and .mfe that can be open with a text editor or excel.
+
 
 ## Scripts
 
